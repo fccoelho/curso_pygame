@@ -59,3 +59,12 @@ Para isso, vamos criar mais [um módulo](/coronashooter/elementos.py) como uma c
 Em seguida iremos criar uma classe para a Nave do jogador e outra para as naves inimigas.
 
 Ao final desta fase poderemos ver as naves na tela.
+
+## Fase 4
+Nesta fase vamos adicionar movimento às naves. Neste processo vamos adicionar também algumas coisas a mais, como a geração de novos virus, controle movimentos da nave do jogador, outras coisas a mais. 
+
+Veja como o jogo ficou.
+```bash
+git checkout Fase_4
+```
+
