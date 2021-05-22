@@ -15,10 +15,24 @@ Para acompanhar o curso vamos usar `tags` do git para ir migrando o código atra
 ```bash
 git fetch --all --tags
 ```
+# O Jogo
+O jogo que iremos criar chama-se "Corona Shooter". e trata-se de um jogo de naves espaciais inspirado em uma pandemia de coronavirus.
 
-# Fase 0
+## Fase 0
 Na fase 0 começamos a organizar basicamente o nosso código. Para viajar no tempo até a faso 0 use o seguinte comando:
 
 ```bash
-git checkout 0
+git checkout Fase_0
 ```
+Nesta fase criamos a estrutura básica do projeto e cria o módulo principal do jogo.
+
+O módulo principal se chama [main.py](/coronashooter/main.py) e fica no diretório coronashooter.
+
+Também criamos um arquivo de texto na raiz do nosso projeto, chamado de [requirements.txt](/requirements.txt) onde vamos listar todas as bibliotecas necessárias para o nosso jogo.
+
+Nesta fase, se executado, o módulo `main.py` apenas apresenta uma janela escura.
+
+## Fase 1
+Na fase 1 vamos usar uma classe para organizar a inicialização e os parâmetros do nosso jogo.
+
+
