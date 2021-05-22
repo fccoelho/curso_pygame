@@ -47,3 +47,15 @@ Nesta fase iremos adicionar outros controles ao jogo.
 git checkout Fase_2
 ```
 Nesta fase movemos o tratamento de eventos para um método separado, e configuramos a tecla `ESC` como tecla de sair do jogo.
+
+## Fase 3
+Nesta fase vamos adicionar a Nave.
+
+```bash
+git checkout Fase_3
+```
+Para isso, vamos criar mais [um módulo](/coronashooter/elementos.py) como uma classe de base para qualquer `sprite` do jogo.
+
+Em seguida iremos criar uma classe para a Nave do jogador e outra para as naves inimigas.
+
+Ao final desta fase poderemos ver as naves na tela.
