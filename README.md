@@ -33,6 +33,12 @@ Também criamos um arquivo de texto na raiz do nosso projeto, chamado de [requir
 Nesta fase, se executado, o módulo `main.py` apenas apresenta uma janela escura.
 
 ## Fase 1
-Na fase 1 vamos usar uma classe para organizar a inicialização e os parâmetros do nosso jogo.
+Na fase 1 vamos usar uma classe para organizar a inicialização e os parâmetros do nosso jogo. Vamos também criar um módulo adicional para cuidar da especificação do plano de fundo do jogo.
+
+```bash
+git checkout Fase_1
+```
+
+Ao final desta fase temos nosso plano de fundo rolando de cima para baixo no nosso jogo. Para isso também adicionamos uma imagem de fundo a um diretório de imagens onde iremos manter todos os elementos gráficos do nosso projeto. 
 
 
