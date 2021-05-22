@@ -41,4 +41,9 @@ git checkout Fase_1
 
 Ao final desta fase temos nosso plano de fundo rolando de cima para baixo no nosso jogo. Para isso também adicionamos uma imagem de fundo a um diretório de imagens onde iremos manter todos os elementos gráficos do nosso projeto. 
 
-
+## Fase 2
+Nesta fase iremos adicionar outros controles ao jogo.
+```bash
+git checkout Fase_2
+```
+Nesta fase movemos o tratamento de eventos para um método separado, e configuramos a tecla `ESC` como tecla de sair do jogo.

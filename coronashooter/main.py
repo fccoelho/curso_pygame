@@ -1,5 +1,13 @@
 import pygame
-from pygame.locals import DOUBLEBUF, FULLSCREEN
+from pygame.locals import (DOUBLEBUF,
+                           FULLSCREEN,
+                           KEYDOWN,
+                           KEYUP,
+                           K_LEFT,
+                           K_RIGHT,
+                           QUIT,
+                           K_ESCAPE
+                           )
 from fundo import Fundo
 
 
@@ -7,7 +15,7 @@ from fundo import Fundo
 
 class Jogo:
     def __init__(self, size=(800, 800), fullscreen=False):
-        actors = {}
+        elementos = {}
         pygame.init()
         self.screen = pygame.display.set_mode(size)
         self.fundo  = Fundo()
@@ -18,28 +26,40 @@ class Jogo:
         self.screen_size = self.screen.get_size()
         pygame.mouse.set_visible( 0 )
         pygame.display.set_caption( 'Corona Shooter' )
+        self.run = True
 
-    def actors_update(self, dt):
+    def atualiza_elementos(self, dt):
         self.fundo.update(dt)
 
-    def actors_draw(self):
+    def desenha_elementos(self):
         self.fundo.draw(self.screen)
 
+    def trata_eventos(self):
+        event = pygame.event.poll()
+        if event.type == pygame.QUIT:
+            self.run = False
+
+        if event.type in (KEYDOWN, KEYUP):
+            key = event.key
+            if key == K_ESCAPE:
+                self.run = False
+
+
     def loop(self):
-        clock         = pygame.time.Clock()
-        dt            = 16
-        while True:
+        clock = pygame.time.Clock()
+        dt = 16
+        while self.run:
             clock.tick( 1000 / dt )
 
-            # Atualiza Elementos
-            self.actors_update( dt )
+            self.trata_eventos()
 
-            # Desenhe para o back buffer
-            self.actors_draw()
+            # Atualiza Elementos
+            self.atualiza_elementos(dt)
+
+            # Desenhe no back buffer
+            self.desenha_elementos()
             pygame.display.flip()
-            event = pygame.event.poll()
-            if event.type == pygame.QUIT:
-                break
+
 
 
 if __name__ == '__main__':
