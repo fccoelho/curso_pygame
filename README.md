@@ -68,3 +68,7 @@ Veja como o jogo ficou.
 git checkout Fase_4
 ```
 
+## Fase 5
+Na fase 5 vamos adicionar tiros e colisões para completar o Jogo.
+
+Os tiros serão implementados como uma classe.
