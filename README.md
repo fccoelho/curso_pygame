@@ -2,7 +2,7 @@
 Criando um jogo de naves espaciais com Pygame. Para iniciantes em Python
 
 ## Pré-requisitos
-Antes de começar este curso você precisa ter instalado em seu computador o git (com o qual irá clora este repositório) e o pygame
+Antes de começar este curso você precisa ter instalado em seu computador o git (com o qual irá clonar este repositório) e o pygame
 
 ```bash
 pip install pygame
@@ -71,4 +71,16 @@ git checkout Fase_4
 ## Fase 5
 Na fase 5 vamos adicionar tiros e colisões para completar o Jogo.
 
-Os tiros serão implementados como uma classe.
+Os tiros serão implementados como uma classe. Também foram implementados pontuação e passagem de fases pelo jogador.
+
+# Possibilidades de melhoria.
+Após estas cinco fases de desenvolvimento, temos um jogo funcional. Mas ainda existem muitas possibilidades de melhorias. Na lista abaixo temos algumas sugestões, mas use a sua criatividade e pense em novas maneiras de incrementar o jogo básico.
+
+- Adicional mostradores de pontos, nível e fase;
+- Trocar tela de fundo, quando passa de nível;  
+- Otimizar a [velocidade de atualização da tela](https://coderslegacy.com/improving-speed-performance-in-pygame/);
+- Adicionar outros elementos ao jogo, como Diferentes tipos de vacina e variantes do vírus, mais resistentes a um tipo de vacina.
+- Adicionar nível(is) chefão.
+- Adicionar trilha sonora e efeitos sonoros
+- Adicionar efeitos de explosão
+- etc.
