@@ -22,7 +22,7 @@ O jogo que iremos criar chama-se "Corona Shooter". e trata-se de um jogo de nave
 Na fase 0 começamos a organizar basicamente o nosso código. Para viajar no tempo até a faso 0 use o seguinte comando:
 
 ```bash
-git checkout Fase_0
+git checkout fase_0
 ```
 Nesta fase criamos a estrutura básica do projeto e cria o módulo principal do jogo.
 
@@ -36,7 +36,7 @@ Nesta fase, se executado, o módulo `main.py` apenas apresenta uma janela escura
 Na fase 1 vamos usar uma classe para organizar a inicialização e os parâmetros do nosso jogo. Vamos também criar um módulo adicional para cuidar da especificação do plano de fundo do jogo.
 
 ```bash
-git checkout Fase_1
+git checkout fase_1
 ```
 
 Ao final desta fase temos nosso plano de fundo rolando de cima para baixo no nosso jogo. Para isso também adicionamos uma imagem de fundo a um diretório de imagens onde iremos manter todos os elementos gráficos do nosso projeto. 
@@ -44,7 +44,7 @@ Ao final desta fase temos nosso plano de fundo rolando de cima para baixo no nos
 ## Fase 2
 Nesta fase iremos adicionar outros controles ao jogo.
 ```bash
-git checkout Fase_2
+git checkout fase_2
 ```
 Nesta fase movemos o tratamento de eventos para um método separado, e configuramos a tecla `ESC` como tecla de sair do jogo.
 
@@ -52,7 +52,7 @@ Nesta fase movemos o tratamento de eventos para um método separado, e configura
 Nesta fase vamos adicionar a Nave.
 
 ```bash
-git checkout Fase_3
+git checkout fase_3
 ```
 Para isso, vamos criar mais [um módulo](/coronashooter/elementos.py) como uma classe de base para qualquer `sprite` do jogo.
 
@@ -65,7 +65,7 @@ Nesta fase vamos adicionar movimento às naves. Neste processo vamos adicionar t
 
 Veja como o jogo ficou.
 ```bash
-git checkout Fase_4
+git checkout fase_4
 ```
 
 ## Fase 5
