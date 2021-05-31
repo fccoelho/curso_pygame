@@ -36,7 +36,7 @@ Nesta fase, se executado, o módulo `main.py` apenas apresenta uma janela escura
 Na fase 1 vamos usar uma classe para organizar a inicialização e os parâmetros do nosso jogo. Vamos também criar um módulo adicional para cuidar da especificação do plano de fundo do jogo.
 
 ```bash
-git checkout fase_1
+git checkout fase_1_corrigida
 ```
 
 Ao final desta fase temos nosso plano de fundo rolando de cima para baixo no nosso jogo. Para isso também adicionamos uma imagem de fundo a um diretório de imagens onde iremos manter todos os elementos gráficos do nosso projeto. 
