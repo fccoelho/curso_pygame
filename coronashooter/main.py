@@ -6,11 +6,9 @@ from pygame.locals import (DOUBLEBUF,
                            K_LEFT,
                            K_RIGHT,
                            QUIT,
-                           K_ESCAPE
+                           K_ESCAPE,
                            )
 from fundo import Fundo
-
-
 
 
 class Jogo:
@@ -18,14 +16,14 @@ class Jogo:
         elementos = {}
         pygame.init()
         self.screen = pygame.display.set_mode(size)
-        self.fundo  = Fundo()
+        self.fundo = Fundo()
         flags = DOUBLEBUF
         if fullscreen:
             flags |= FULLSCREEN
 
         self.screen_size = self.screen.get_size()
-        pygame.mouse.set_visible( 0 )
-        pygame.display.set_caption( 'Corona Shooter' )
+        pygame.mouse.set_visible(0)
+        pygame.display.set_caption('Corona Shooter')
         self.run = True
 
     def atualiza_elementos(self, dt):
@@ -36,7 +34,7 @@ class Jogo:
 
     def trata_eventos(self):
         event = pygame.event.poll()
-        if event.type == pygame.QUIT:
+        if event.type == QUIT:
             self.run = False
 
         if event.type in (KEYDOWN, KEYUP):
@@ -44,12 +42,11 @@ class Jogo:
             if key == K_ESCAPE:
                 self.run = False
 
-
     def loop(self):
         clock = pygame.time.Clock()
         dt = 16
         while self.run:
-            clock.tick( 1000 / dt )
+            clock.tick(1000 / dt)
 
             self.trata_eventos()
 
@@ -61,12 +58,6 @@ class Jogo:
             pygame.display.flip()
 
 
-
 if __name__ == '__main__':
     J = Jogo()
     J.loop()
-
-
-
-
-
