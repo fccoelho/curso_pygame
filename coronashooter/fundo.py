@@ -38,9 +38,5 @@ class Fundo:
         if self.pos[1] > 0:
             self.pos[1] -= self.imagesize[1]
 
-    # update()
-
     def draw(self, screen):
         screen.blit(self.image, self.pos)
-
-
