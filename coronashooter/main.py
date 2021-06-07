@@ -12,9 +12,10 @@ from fundo import Fundo
 from elementos import ElementoSprite
 import random
 
+import time
 
 class Jogo:
-    def __init__(self, size=(1000, 1000), fullscreen=False):
+    def __init__(self, size=(1200, 800), fullscreen=False):
         self.elementos = {}
         pygame.init()
         self.tela = pygame.display.set_mode(size)
@@ -30,6 +31,8 @@ class Jogo:
         pygame.mouse.set_visible(0)
         pygame.display.set_caption('Corona Shooter')
         self.run = True
+        self.atirar = 0
+        self.ultimo_tempo = time.time()
 
     def manutenção(self):
         r = random.randint(0, 100)
@@ -95,8 +98,9 @@ class Jogo:
         # Aumenta a pontos baseado no número de acertos:
         self.jogador.set_pontos(self.jogador.get_pontos() + len(hitted))
 
-    def trata_eventos(self):
+    def trata_eventos(self):        
         event = pygame.event.poll()
+        
         if event.type == pygame.QUIT:
             self.run = False
 
@@ -105,8 +109,13 @@ class Jogo:
             if key == K_ESCAPE:
                 self.run = False
             elif key in (K_LCTRL, K_RCTRL):
-                self.interval = 0
-                self.jogador.atira(self.elementos["tiros"])
+                if event.type == KEYDOWN:
+                    self.interval = 0
+                    self.atirar = 1
+                #self.jogador.atira(self.elementos["tiros"])
+                elif event.type == KEYUP:
+                    self.interval = 0
+                    self.atirar = 0
             elif key == K_UP:
                 self.jogador.accel_top()
             elif key == K_DOWN:
@@ -115,6 +124,12 @@ class Jogo:
                 self.jogador.accel_right()
             elif key == K_LEFT:
                 self.jogador.accel_left()
+        
+        if self.atirar == 1:
+            diferenca_tempo_atual = time.time() - self.ultimo_tempo
+            if diferenca_tempo_atual > 0.5:
+                self.ultimo_tempo = time.time()
+                self.jogador.atira(self.elementos["tiros"])
 
         keys = pygame.key.get_pressed()
         if self.interval > 10:
@@ -123,21 +138,24 @@ class Jogo:
                 self.jogador.atira(self.elementos["tiros"])
 
     def loop(self):
+        
         clock = pygame.time.Clock()
         dt = 16
         self.elementos['virii'] = pygame.sprite.RenderPlain(Virus([120, 50]))
-        self.jogador = Jogador([200, 400], 5)
+        self.jogador = Jogador([200, 400], 3)
         self.elementos['jogador'] = pygame.sprite.RenderPlain(self.jogador)
         self.elementos['tiros'] = pygame.sprite.RenderPlain()
         self.elementos['tiros_inimigo'] = pygame.sprite.RenderPlain()
         while self.run:
             clock.tick(1000 / dt)
-
+            
             self.trata_eventos()
             self.ação_elemento()
             self.manutenção()
             # Atualiza Elementos
             self.atualiza_elementos(dt)
+
+            #print(self.jogador.get_lives())
 
             # Desenhe no back buffer
             self.desenha_elementos()
@@ -292,3 +310,4 @@ class Tiro(ElementoSprite):
 if __name__ == '__main__':
     J = Jogo()
     J.loop()
+    pygame.quit()
