@@ -22,6 +22,7 @@ class Jogo:
         self.jogador = None
         self.interval = 0
         self.nivel = 0
+        self.fonte = pygame.font.SysFont("monospace", 16)
         flags = DOUBLEBUF
         if fullscreen:
             flags |= FULLSCREEN
@@ -38,7 +39,7 @@ class Jogo:
         if r > (10 * len(virii)):
             enemy = Virus([0, 0])
             size = enemy.get_size()
-            enemy.set_pos([min(max(x, size[0]/2), self.screen_size[0]-size[0]/2), size[1]/2])
+            enemy.set_pos([min(max(x, size[0] / 2), self.screen_size[0] - size[0] / 2), size[1] / 2])
             colisores = pygame.sprite.spritecollide(enemy, virii, False)
             if colisores:
                 return
@@ -66,6 +67,13 @@ class Jogo:
             v.draw(self.tela)
 
     def verifica_impactos(self, elemento, list, action):
+        """
+        Verifica ocorrência de colisões.
+        :param elemento: Instância de RenderPlain ou seja um grupo de sprites
+        :param list: lista ou grupo de sprites
+        :param action: função a ser chamada no evento de colisão
+        :return: lista de sprites envolvidos na colisão
+        """
         if isinstance(elemento, pygame.sprite.RenderPlain):
             hitted = pygame.sprite.groupcollide(elemento, list, 1, 0)
             for v in hitted.values():
@@ -79,6 +87,10 @@ class Jogo:
             return elemento.morto
 
     def ação_elemento(self):
+        """
+        Executa as ações dos elementos do jogo.
+        :return:
+        """
         self.verifica_impactos(self.jogador, self.elementos["tiros_inimigo"],
                                self.jogador.alvejado)
         if self.jogador.morto:
@@ -145,6 +157,8 @@ class Jogo:
 
             # Desenhe no back buffer
             self.desenha_elementos()
+            # texto = self.fonte.render(f"Vidas: {self.jogador.get_lives()}", True, (255, 255, 255), (0, 0, 0))
+
             pygame.display.flip()
 
 
@@ -252,8 +266,10 @@ class Jogador(Nave):
 
     def atira(self, lista_de_tiros, image=None):
         l = 1
-        if self.pontos > 10: l = 3
-        if self.pontos > 50: l = 5
+        if self.pontos > 10:
+            l = 3
+        if self.pontos > 50:
+            l = 5
 
         p = self.get_pos()
         speeds = self.get_fire_speed(l)
