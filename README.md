@@ -15,12 +15,11 @@
 1. Apagar o fork do <https://github.com/fccoelho/curso_pygame>
 2. Fazer o fork desse repositório
 3. Clonar seu fork junto a branch game `git clone -b game <url-seu-fork>`
-4. Entrar na branch game `git checkout game`
-5. Fazer as alterações + commits
-6. Fazer Push para o seu fork (na branch game)
-7. Abrir Pull Request para este repositório
-8. Pedir Revisão para um dos integrantes
-9. Lembrar de atualizar seu fork antes das alterações
+4. Fazer as alterações + commits
+5. Fazer Push para o seu fork (na branch game)
+6. Abrir Pull Request para este repositório
+7. Pedir Revisão para um dos integrantes
+8. Lembrar de atualizar seu fork antes das alterações
 
 ## Objetivos Iniciais
  - [ ] Traduzir Código (Carol)
