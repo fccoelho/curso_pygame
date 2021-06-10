@@ -1,3 +1,15 @@
+# Informações do Grupo
+
+Integrantes:
+ - Eduardo Adame Salles
+ - Ana Carolina Erthal
+ - Vinicius Hedler
+ - Rodrigo Pintucci
+ - Tiago Barradas
+
+Branch:
+ - game
+
 # Curso de Programação de Jogos com Pygame
 Criando um jogo de naves espaciais com Pygame. Para iniciantes em Python
 
