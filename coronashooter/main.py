@@ -17,11 +17,15 @@ class Jogo:
     def __init__(self, size=(800, 800), fullscreen=False):
         self.elementos = {}
         pygame.init()
-        self.screen = pygame.display.set_mode(size)
-        self.fundo = Fundo()
         flags = DOUBLEBUF
+        # info = pygame.display.Info()
+        # screen_width, screen_height = info.current_w, info.current_h
+        # window_width, window_height = screen_width-10, screen_height-50
         if fullscreen:
             flags |= FULLSCREEN
+        self.screen = pygame.display.set_mode(
+            size, flags)
+        self.fundo = Fundo()
 
         self.screen_size = self.screen.get_size()
         pygame.mouse.set_visible(0)
