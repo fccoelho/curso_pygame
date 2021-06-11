@@ -1,7 +1,5 @@
 import pygame
-from pygame.locals import (DOUBLEBUF,
-                           FULLSCREEN,
-                           KEYDOWN,
+from pygame.locals import (KEYDOWN,
                            KEYUP,
                            K_LEFT,
                            K_RIGHT,
@@ -17,15 +15,16 @@ class Jogo:
     def __init__(self, size=(1000, 1000), fullscreen=False):
         self.elementos = {}
         pygame.init()
-        self.tela = pygame.display.set_mode(size)
+        flags = pygame.DOUBLEBUF
+        if fullscreen:
+            flags |= pygame.FULLSCREEN
+        self.tela = pygame.display.set_mode(size, flags=flags, depth=16)
         self.fundo = Fundo()
         self.jogador = None
         self.interval = 0
         self.nivel = 0
         self.fonte = pygame.font.SysFont("monospace", 16)
-        flags = DOUBLEBUF
-        if fullscreen:
-            flags |= FULLSCREEN
+
 
         self.screen_size = self.tela.get_size()
         pygame.mouse.set_visible(0)
@@ -310,5 +309,5 @@ class Tiro(ElementoSprite):
 
 
 if __name__ == '__main__':
-    J = Jogo()
+    J = Jogo(fullscreen=False)
     J.loop()
