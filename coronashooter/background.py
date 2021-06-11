@@ -3,7 +3,7 @@ import os
 from math import ceil
 
 
-class Fundo:
+class Background:
     """
     Esta classe cria o fundo do jogo
     """
@@ -12,7 +12,7 @@ class Fundo:
         """
         Desenha o fundo da tela
         """
-        image = os.path.join('imagens', image)
+        image = os.path.join('images', image)
         image = pygame.image.load(image).convert()
 
         self.imagesize = image.get_size()
