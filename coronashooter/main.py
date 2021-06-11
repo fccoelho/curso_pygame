@@ -67,6 +67,7 @@ class Game:
             # Desenhe no back buffer
             self.draw_elements()
             pygame.display.flip()
+        pygame.quit()
 
 
 class Spaceship(ElementSprite):
