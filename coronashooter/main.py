@@ -23,13 +23,20 @@ class Jogo:
         self.jogador = None
         self.interval = 0
         self.nivel = 0
-        self.fonte = pygame.font.SysFont("monospace", 16)
+        self.fonte = pygame.font.SysFont("monospace", 32)
 
 
         self.screen_size = self.tela.get_size()
         pygame.mouse.set_visible(0)
         pygame.display.set_caption('Corona Shooter')
         self.run = True
+
+
+    def escreve_placar(self):
+        vidas = self.fonte.render(f'vidas: {self.jogador.get_lives()*"❤"}', 1, (255, 255, 0), (0, 0, 0))
+        score = self.fonte.render(f'Score: {self.jogador.pontos}', 1, (255, 255, 0), (0, 0, 0))
+        self.tela.blit(vidas, (30, 30))
+        self.tela.blit(score, (self.screen_size[0] - 300, 30))
 
     def manutenção(self):
         r = random.randint(0, 100)
@@ -156,6 +163,7 @@ class Jogo:
 
             # Desenhe no back buffer
             self.desenha_elementos()
+            self.escreve_placar()
             # texto = self.fonte.render(f"Vidas: {self.jogador.get_lives()}", True, (255, 255, 255), (0, 0, 0))
 
             pygame.display.flip()
