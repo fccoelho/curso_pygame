@@ -22,7 +22,7 @@
 8. Lembrar de atualizar seu fork antes das alterações
 
 ## Objetivos Iniciais
- - [ ] Traduzir Código (Carol)
+ - [x] Traduzir Código (Carol)
  - [ ] Revisar e Documentar o Código (Vini)
  - [ ] Tamanho da Tela (Edu)
  - [ ] Calibrar movimentação (ir de um lado para o outro da tela) (Edu)

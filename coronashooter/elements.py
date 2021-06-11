@@ -2,7 +2,7 @@ import pygame
 import os
 
 
-class ElementoSprite(pygame.sprite.Sprite):
+class ElementSprite(pygame.sprite.Sprite):
     """
     Esta é a classe básica de todos os objetos do jogo.
     """
@@ -11,7 +11,7 @@ class ElementoSprite(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = image
         if isinstance(self.image, str):
-            self.image = os.path.join('imagens', self.image)
+            self.image = os.path.join('images', self.image)
             self.image = pygame.image.load(self.image)
         if new_size:
             self.scale(new_size)

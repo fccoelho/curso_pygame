@@ -8,14 +8,14 @@ from pygame.locals import (DOUBLEBUF,
                            QUIT,
                            K_ESCAPE
                            )
-from fundo import Fundo
-from elementos import ElementoSprite
+from background import Background
+from elements import ElementSprite
 import random
 
 
-class Jogo:
+class Game:
     def __init__(self, size=(800, 800), fullscreen=False):
-        self.elementos = {}
+        self.elements = {}
         pygame.init()
         flags = DOUBLEBUF
         # info = pygame.display.Info()
@@ -25,23 +25,23 @@ class Jogo:
             flags |= FULLSCREEN
         self.screen = pygame.display.set_mode(
             size, flags)
-        self.fundo = Fundo()
+        self.background = Background()
 
         self.screen_size = self.screen.get_size()
         pygame.mouse.set_visible(0)
         pygame.display.set_caption('Corona Shooter')
         self.run = True
 
-    def atualiza_elementos(self, dt):
-        self.fundo.update(dt)
+    def update_elements(self, dt):
+        self.background.update(dt)
 
-    def desenha_elementos(self):
-        self.fundo.draw(self.screen)
-        self.nave.draw(self.screen)
-        for el in self.elementos['virii']:
+    def draw_elements(self):
+        self.background.draw(self.screen)
+        self.spaceship.draw(self.screen)
+        for el in self.elements['coronavirus']:
             el.draw(self.screen)
 
-    def trata_eventos(self):
+    def handle_events(self):
         event = pygame.event.poll()
         if event.type == pygame.QUIT:
             self.run = False
@@ -54,26 +54,26 @@ class Jogo:
     def loop(self):
         clock = pygame.time.Clock()
         dt = 16
-        self.elementos['virii'] = [pygame.sprite.RenderPlain(Virus([120, 50]))]
-        self.nave = pygame.sprite.RenderPlain(Nave([200, 400], 5))
+        self.elements['coronavirus'] = [pygame.sprite.RenderPlain(Virus([120, 50]))]
+        self.spaceship = pygame.sprite.RenderPlain(Spaceship([200, 400], 5))
         while self.run:
             clock.tick(1000 / dt)
 
-            self.trata_eventos()
+            self.handle_events()
 
             # Atualiza Elementos
-            self.atualiza_elementos(dt)
+            self.update_elements(dt)
 
             # Desenhe no back buffer
-            self.desenha_elementos()
+            self.draw_elements()
             pygame.display.flip()
 
 
-class Nave(ElementoSprite):
+class Spaceship(ElementSprite):
     def __init__(self, position, lives=0, speed=[0, 0], image=None, new_size=[83, 248]):
         self.acceleration = [3, 3]
         if not image:
-            image = "seringa.png"
+            image = "syringe.png"
         super().__init__(image, position, speed, new_size)
         self.set_lives(lives)
 
@@ -84,7 +84,7 @@ class Nave(ElementoSprite):
         self.lives = lives
 
 
-class Virus(Nave):
+class Virus(Spaceship):
     def __init__(self, position, lives=0, speed=None, image=None, size=(100, 100)):
         if not image:
             image = "virus.png"
@@ -92,5 +92,5 @@ class Virus(Nave):
 
 
 if __name__ == '__main__':
-    J = Jogo()
-    J.loop()
+    G = Game()
+    G.loop()
