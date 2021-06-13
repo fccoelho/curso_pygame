@@ -83,7 +83,6 @@ class Game:
             # The elements are drawn on the backbuffer, which is later on flipped to become the frontbuffer
             self.draw_elements()
             pygame.display.flip()
-        
         pygame.quit() # kill the program
 
 
