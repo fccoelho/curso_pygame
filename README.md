@@ -86,3 +86,7 @@ Após estas cinco fases de desenvolvimento, temos um jogo funcional. Mas ainda e
 - etc.
 
 # Fim
+
+## Fase Extra: Adicionando Sons e Música
+
+Nesta fase implementada como um branch chamado `musica`, 

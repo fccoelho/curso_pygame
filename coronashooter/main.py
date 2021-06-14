@@ -25,8 +25,8 @@ class Jogo:
         self.nivel = 0
         pygame.font.init()
         self.fonte = pygame.font.SysFont('bitstreamverasans', 42)
-
-
+        pygame.mixer.music.load('sons/space-syndrome.wav')
+        pygame.mixer.music.play(-1)
         self.screen_size = self.tela.get_size()
         pygame.mouse.set_visible(0)
         pygame.display.set_caption('Corona Shooter')
