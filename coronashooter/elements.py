@@ -27,21 +27,21 @@ class ElementSprite(pygame.sprite.Sprite):
         # Checks if the image is to be resized and do so if it is
         if new_size:
             self.scale(new_size)
-        self.rect = self.image.get_rect() # gets a pygame.Rect object out of the image
+        self.rect = self.image.get_rect()  # gets a pygame.Rect object out of the image
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
 
-        self.set_pos(position) # sets the position of the sprite
-        self.set_speed(speed or (0, 2)) # sets the speed. If None, the speed is set to (0,2)
-
+        self.set_pos(position)  # sets the position of the sprite
+        # sets the speed. If None, the speed is set to (0,2)
+        self.set_speed(speed or (0, 2))
 
     def update(self, dt):
         """ Updates the position of the element
-        :param dt: unused
+        :param dt: time variation
         :type dt: float (?)
         """
         move_speed = (self.speed[0] * dt / 16,
-                      self.speed[1] * dt / 16) # note that dt=16, so dt/16 == 1
+                      self.speed[1] * dt / 16)  # note that dt=16, so dt/16 == 1
         self.rect = self.rect.move(move_speed)
         # kills the element if it is out of the screen borders
         if (self.rect.left > self.area.right) or \
@@ -50,7 +50,6 @@ class ElementSprite(pygame.sprite.Sprite):
             self.kill()
         if (self.rect.bottom < - 40):
             self.kill()
-
 
     def get_speed(self):
         return self.speed

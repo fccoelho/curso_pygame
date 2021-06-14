@@ -23,9 +23,10 @@
 
 ## Objetivos Iniciais
  - [x] Traduzir Código (Carol)
- - [ ] Revisar e Documentar o Código (Vini)
- - [ ] Tamanho da Tela (Edu)
- - [ ] Calibrar movimentação (ir de um lado para o outro da tela) (Edu)
+ - [x] Revisar e Documentar o Código (Vini)
+ - [x] Tamanho da Tela (Edu)
+ - [x] Adicionar movimentação (Edu)
+ - [ ] Calibrar movimentação (ir de um lado para o outro da tela) (Edu) ~~ Commit parcial / movimentação funcionando, mas não de forma ideal. Existe algo "grudando" o sprite na esquerda e em cima.
  - [ ] Sprites (speed, escudo, etc) (Diguin)
  - [ ] Implementar Sprites (Carol)
  - [ ] Power-Ups (Edu/Vini)
