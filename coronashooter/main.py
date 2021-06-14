@@ -281,6 +281,8 @@ class Jogador(Nave):
     """
 
     def __init__(self, position, lives=10, image=None, new_size=[83, 248]):
+        self.tiro = pygame.mixer.Sound('sons/fire.wav')
+        self.tiro.set_volume(0.2)
         if not image:
             image = "seringa.png"
         super().__init__(position, lives, [0, 0], image, new_size)
@@ -324,7 +326,7 @@ class Jogador(Nave):
             l = 3
         if self.pontos > 50:
             l = 5
-
+        pygame.mixer.Sound.play(self.tiro)
         p = self.get_pos()
         speeds = self.get_fire_speed(l)
         for s in speeds:
