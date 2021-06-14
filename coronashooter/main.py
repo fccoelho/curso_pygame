@@ -23,7 +23,8 @@ class Jogo:
         self.jogador = None
         self.interval = 0
         self.nivel = 0
-        self.fonte = pygame.font.SysFont("monospace", 32)
+        pygame.font.init()
+        self.fonte = pygame.font.SysFont('bitstreamverasans', 42)
 
 
         self.screen_size = self.tela.get_size()
