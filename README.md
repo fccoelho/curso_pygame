@@ -89,4 +89,4 @@ Após estas cinco fases de desenvolvimento, temos um jogo funcional. Mas ainda e
 
 ## Fase Extra: Adicionando Sons e Música
 
-Nesta fase implementada como um branch chamado `musica`, 
+Nesta fase implementada como um branch chamado `musica`, vamos usar sons livres para o nosso jogo provenientes da biblioteca freesound. A musica usada é a [Space-syndrome](https://freesound.org/people/X3nus/sounds/449938/).  Os efeitos sonoros também foram obtidos da Freesound.

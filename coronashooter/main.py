@@ -4,11 +4,13 @@ from pygame.locals import (KEYDOWN,
                            K_LEFT,
                            K_RIGHT,
                            QUIT,
+K_m, K_LEFTBRACKET, K_RIGHTBRACKET,
                            K_ESCAPE, K_UP, K_DOWN, K_RCTRL, K_LCTRL
                            )
 from fundo import Fundo
 from elementos import ElementoSprite
 import random
+from  time import sleep
 
 
 class Jogo:
@@ -25,19 +27,43 @@ class Jogo:
         self.nivel = 0
         pygame.font.init()
         self.fonte = pygame.font.SysFont('bitstreamverasans', 42)
+        self.fonte2 = pygame.font.SysFont('bitstreamverasans', 80)
         pygame.mixer.music.load('sons/space-syndrome.wav')
+        self.explosão = pygame.mixer.Sound('sons/retro-explosion-02.wav')
         pygame.mixer.music.play(-1)
+        self.music = True
         self.screen_size = self.tela.get_size()
         pygame.mouse.set_visible(0)
         pygame.display.set_caption('Corona Shooter')
         self.run = True
+        self.go = False
 
+    def liga_desliga_musica(self):
+        if self.music:
+            pygame.mixer.music.pause()
+            self.music = False
+        else:
+            pygame.mixer.music.unpause()
+            self.music = True
+
+    def ajusta_volume(self, m):
+        volume = pygame.mixer.music.get_volume()
+        volume *= m
+        if volume > 1:
+            volume = 1
+        if volume < 0.1:
+            volume = 0.1
+        pygame.mixer.music.set_volume(volume)
 
     def escreve_placar(self):
         vidas = self.fonte.render(f'vidas: {self.jogador.get_lives()*"❤"}', 1, (255, 255, 0), (0, 0, 0))
         score = self.fonte.render(f'Score: {self.jogador.pontos}', 1, (255, 255, 0), (0, 0, 0))
         self.tela.blit(vidas, (30, 30))
         self.tela.blit(score, (self.screen_size[0] - 300, 30))
+
+    def game_over(self):
+        gameover = self.fonte2.render("GAME OVER!", 1, (255, 255, 0), (0, 0, 0))
+        self.tela.blit(gameover, (self.screen_size[0]//4, self.screen_size[1]//2))
 
     def manutenção(self):
         r = random.randint(0, 100)
@@ -101,6 +127,8 @@ class Jogo:
         self.verifica_impactos(self.jogador, self.elementos["tiros_inimigo"],
                                self.jogador.alvejado)
         if self.jogador.morto:
+            pygame.mixer.Sound.play(self.explosão)
+            self.go = True
             self.run = False
             return
 
@@ -108,6 +136,8 @@ class Jogo:
         self.verifica_impactos(self.jogador, self.elementos["virii"],
                                self.jogador.colisão)
         if self.jogador.morto:
+            pygame.mixer.Sound.play(self.explosão)
+            self.go = True
             self.run = False
             return
         # Verifica se o personagem atingiu algum alvo.
@@ -123,7 +153,7 @@ class Jogo:
         if event.type == pygame.QUIT:
             self.run = False
 
-        if event.type in (KEYDOWN, KEYUP):
+        if event.type in (KEYDOWN,):
             key = event.key
             if key == K_ESCAPE:
                 self.run = False
@@ -138,6 +168,13 @@ class Jogo:
                 self.jogador.accel_right()
             elif key == K_LEFT:
                 self.jogador.accel_left()
+            elif key == K_m:
+                self.liga_desliga_musica()
+            elif key == K_LEFTBRACKET:
+                self.ajusta_volume(0.9)
+            elif key == K_RIGHTBRACKET:
+                self.ajusta_volume(1.1)
+
 
         keys = pygame.key.get_pressed()
         if self.interval > 10:
@@ -157,6 +194,7 @@ class Jogo:
             clock.tick(1000 / dt)
 
             self.trata_eventos()
+
             self.ação_elemento()
             self.manutenção()
             # Atualiza Elementos
@@ -164,10 +202,12 @@ class Jogo:
 
             # Desenhe no back buffer
             self.desenha_elementos()
-            self.escreve_placar()
+            if self.go:
+                self.game_over()
             # texto = self.fonte.render(f"Vidas: {self.jogador.get_lives()}", True, (255, 255, 255), (0, 0, 0))
-
+            self.escreve_placar()
             pygame.display.flip()
+        sleep(2)
 
 
 class Nave(ElementoSprite):
@@ -246,6 +286,12 @@ class Jogador(Nave):
         super().__init__(position, lives, [0, 0], image, new_size)
         self.pontos = 0
 
+    def alvejado(self):
+        if self.get_lives() <= 0:
+            pygame.mixer.Sound.play(self.explosão)
+            self.kill()
+        else:
+            self.set_lives(self.get_lives() - 1)
     def update(self, dt):
         move_speed = (self.speed[0] * dt / 16,
                       self.speed[1] * dt / 16)
