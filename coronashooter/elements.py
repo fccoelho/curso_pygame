@@ -19,30 +19,31 @@ class ElementSprite(pygame.sprite.Sprite):
         :type new_size: list
         """
         pygame.sprite.Sprite.__init__(self)
-        # Try to load the image
+        # Tries to load the image
         if isinstance(image, str):
             self.image = pygame.image.load(os.path.join('images', image))
         else:
             raise TypeError("image must be of type str")
-        # Checks if the image is to be resized and do so if it is
+        # Checks if the image has to be resized and if so, does it
         if new_size:
             self.scale(new_size)
         self.rect = self.image.get_rect()  # gets a pygame.Rect object out of the image
         screen = pygame.display.get_surface()
         self.area = screen.get_rect()
-
+        self.speed = speed
         self.set_pos(position)  # sets the position of the sprite
         # sets the speed. If None, the speed is set to (0,2)
-        self.set_speed(speed or (0, 2))
 
     def update(self, dt):
         """ Updates the position of the element
         :param dt: time variation
         :type dt: float (?)
         """
-        move_speed = (self.speed[0] * dt / 16,
-                      self.speed[1] * dt / 16)  # note that dt=16, so dt/16 == 1
-        self.rect = self.rect.move(move_speed)
+        move_speed = (self.speed * dt / 16,
+                      self.speed * dt / 16)  # note that dt=16, so dt/16 == 1
+        pos_y = self.rect.center[1] + self.speed*dt
+        self.rect.center = (self.rect.center[0], pos_y)
+        # self.rect = self.rect.move(move_speed)
         # kills the element if it is out of the screen borders
         if (self.rect.left > self.area.right) or \
                 (self.rect.top > self.area.bottom) or \
@@ -72,3 +73,7 @@ class ElementSprite(pygame.sprite.Sprite):
     def scale(self, new_size):
         # resizes the sprite
         self.image = pygame.transform.scale(self.image, new_size)
+
+    def set_image(self, image, scale):
+        self.image = pygame.image.load(os.path.join('images', image))
+        self.scale(scale)
