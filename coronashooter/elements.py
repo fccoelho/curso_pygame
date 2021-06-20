@@ -202,9 +202,9 @@ class Shooter(Enemy):
             pos_y += self.speed*dt
         # mas esse aí é o papel do teste
         # ERA ESSE OR POBLEMAAAAAAAAAAAAAA (TT.TT  )
-        if pos_x >= 560:
-            self.direction = (-1, 0)
-        elif pos_x <= 60:
+        if pos_x >= 580:
+            self.direction = (-0.71, 0)
+        elif pos_x <= 40:
             self.direction = (1, 0)
         pos_x += self.direction[0]*self.speed*dt/4
         self.rect.center = (pos_x, pos_y)
