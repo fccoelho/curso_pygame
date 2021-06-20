@@ -13,6 +13,7 @@ from elements import *
 import random
 
 
+
 class Game:
     def __init__(self, size=(640, 640), fullscreen=False):
         """ Creates the object that will control the game
@@ -49,8 +50,7 @@ class Game:
         """
         self.background.update(dt)
         for enemy in self.enemies:
-            # , self.player.rect.center[0] - Necessário para spyder
-            enemy[0].update(dt)
+            enemy[0].update(dt, self.player.rect.center[0])
         for shoot in self.shoots:
             shoot[0].update(dt)
 
@@ -66,7 +66,7 @@ class Game:
         for shoot in self.shoots:
             shoot[1].draw(self.screen)
 
-    def handle_events(self, event, dt=16):
+    def handle_events(self, event, dt=1000):
         """ Handles each event in the event queue.
         This is basically only used for the user to control the spaceship and quit the game
         """
@@ -81,8 +81,12 @@ class Game:
 
     def spawn(self):
         pos_x = random.randint(0, 640)
+        enemy_type = random.randint(0,1)
         if self.spwcounter > 60:
-            enemy = Shooter([pos_x, -25], color=self.color)
+            if enemy_type == 0:
+                enemy = Shooter([pos_x, -25], color=self.color)
+            elif enemy_type == 1:
+                enemy = Spider([pos_x, -25], color=self.color)
             self.enemies.append([enemy, pygame.sprite.RenderPlain(enemy)])
             self.spwcounter = 0
         else:
@@ -118,7 +122,7 @@ class Game:
             clock.tick(1000 / dt)
             event = pygame.event.poll()
             # Handles the user interaction
-            self.player.update(event, dt)
+            self.player.update(dt)
             self.player.shoot(event, self.shoots)
             self.handle_events(event, dt)
             self.handle_collision()
@@ -133,37 +137,6 @@ class Game:
         pygame.quit()  # kill the program
 
 
-class Spaceship(ElementSprite):
-    """ class of the controlable element.
-    Inherits from ElementSprite (which inherits from pygame.sprite.Sprite) so pygame can do with it whatever it does with sprites.
-    """
-
-    def __init__(self, position, lives=0, speed=3.5, image=None, new_size=[83, 248]):
-        """ Spaceship constructor
-        :param position: the initial position of the element
-        :type position: list
-        :param lives: how many times the element can get hit before dying
-        :type lives: integer (?)
-        :param speed: the initial speed of the element on both axis
-        :type speed: list
-        :param image: the image of the element. The class has a default value that gets overwritten when this parameter is not None
-        :type image: string
-        :param new_size: the desired size of the sprite. See ElementSprite.scale()
-        :type new_size: list
-        """
-        self.acceleration = [
-            3, 3]  # sets the initial acceleration of the spaceship
-        image = "virus.png" if not image else image  # sets the default image
-        # calls ElementSprite.__init__()
-        super().__init__(image, position, speed, new_size)
-        self.set_lives(lives)  # sets the lives of the spaceship
-
-    def get_lives(self):
-        return self.lives
-
-    def set_lives(self, lives):
-        self.lives = lives
-
 
 class Player(Spaceship):
     def __init__(self, position, lives=3, speed=.5, image=None, new_size=(27, 36)):
@@ -171,29 +144,48 @@ class Player(Spaceship):
             image = "nave1.png"
         super().__init__(position, lives, speed, image, new_size)
         self.direction = (0, 0)
+        self.vel = (0,0)
+        self.max_vel = .5
+        self.acc = (0,0)
         self.score = 0
         self.size = new_size
         self.isdead = False
 
-    def update(self, event, dt):
-        if event.type in (KEYDOWN,):
-            key = event.key
-            if key in (K_UP, K_DOWN, K_RIGHT, K_LEFT):
-                if key == K_UP and self.rect.top >= 0:
-                    self.direction = (0, -1)
-                elif key == K_DOWN:
-                    self.direction = (0, 1)
-                elif key == K_RIGHT:
-                    self.set_image('nave2.png', self.size)
-                    self.direction = (1, 0)
-                elif key == K_LEFT:
-                    self.set_image('nave3.png', self.size)
-                    self.direction = (-1, 0)
-        elif event.type in (KEYUP,):
-            self.direction = (0, 0)
-            self.set_image('nave1.png', self.size)
-        pos_x = self.rect.center[0] + self.direction[0]*self.speed*dt
-        pos_y = self.rect.center[1] + self.direction[1]*self.speed*dt
+    def update(self, dt):
+        new_acc = [0,0]
+        keys = pygame.key.get_pressed()
+        if keys[K_LEFT]:
+            new_acc[0] -= 1
+        if keys[K_RIGHT]:
+            new_acc[0] += 1
+        if keys[K_UP]:
+            new_acc[1] -= 1
+        if keys[K_DOWN]:
+            new_acc[1] += 1
+        
+        new_acc = tuple(new_acc)
+        if new_acc != self.acc:
+            self.acc = new_acc
+            if self.acc[0] == 0:
+                self.set_image('nave1.png', self.size)
+            elif self.acc[0] == 1:
+                self.set_image('nave2.png', self.size)
+            elif self.acc[0] == -1:
+                self.set_image('nave3.png', self.size)
+
+        self.vel = (self.vel[0]+self.acc[0]*dt/100, self.vel[1]+self.acc[1]*dt/100)
+        self.normalize_vel()
+        
+        pos_x = self.rect.center[0] + self.vel[0]*dt
+        pos_y = self.rect.center[1] + self.vel[1]*dt
+
+        # Reduce the velocity, as of friction
+        self.vel = (self.vel[0]*9/10, self.vel[1]*9/10)
+        if abs(self.vel[0])<0.01:
+            self.vel = (0, self.vel[1])
+        if abs(self.vel[1])<0.01:
+            self.vel = (self.vel[0], 0)
+
         if pos_x < 0:
             pos_x = 640
         elif pos_x > 640:
@@ -210,6 +202,12 @@ class Player(Spaceship):
             if key == K_LCTRL:
                 laser = Laser((self.rect.center[0], self.rect.top))
                 shoots.append([laser, pygame.sprite.RenderPlain(laser)])
+
+    def normalize_vel(self):
+        abs_vel = (self.vel[0]**2+self.vel[1]**2)**.5
+        if abs_vel>self.max_vel:
+            self.vel = (self.vel[0]/abs_vel*self.max_vel, self.vel[1]/abs_vel*self.max_vel)
+
 
     def got_hit(self):
         self.lives -= 1

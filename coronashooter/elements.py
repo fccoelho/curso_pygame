@@ -101,8 +101,7 @@ class Spaceship(ElementSprite):
         :param new_size: the desired size of the sprite. See ElementSprite.scale()
         :type new_size: list
         """
-        self.acceleration = [
-            3, 3]  # sets the initial acceleration of the spaceship
+    
         image = "virus.png" if not image else image  # sets the default image
         # calls ElementSprite.__init__()
         super().__init__(image, position, speed, new_size)
@@ -189,7 +188,7 @@ class Shooter(Enemy):
         super().__init__(position, lives, speed, image, size)
         self.direction = (1, 0)
 
-    def update(self, dt):
+    def update(self, dt, playerposx):
         """ Updates the position of the element
         :param dt: time variation
         :type dt: float (?)
